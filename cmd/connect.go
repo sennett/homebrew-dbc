@@ -8,8 +8,8 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/spf13/cobra"
 	"github.com/birdiecare/dbc/handler"
+	"github.com/spf13/cobra"
 )
 
 var host string
@@ -32,14 +32,7 @@ Then paste the token`,
 	Run: func(cmd *cobra.Command, args []string) {
 		flag.Parse()
 
-		fmt.Println("DBC Connect")
-		fmt.Println("Host: ", host)
-		fmt.Println("Port: ", port)
-		fmt.Println("Region: ", region)
-		fmt.Println("User: ", user)
-
-		token := handler.handleToken(host, port, region, user)
-
+		token := handler.HandleToken(host, port, region, user)
 		fmt.Println("Token: ", token)
 	},
 }
