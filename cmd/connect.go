@@ -9,6 +9,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+	"github.com/birdiecare/dbc/handler"
 )
 
 var host string
@@ -37,6 +38,9 @@ Then paste the token`,
 		fmt.Println("Region: ", region)
 		fmt.Println("User: ", user)
 
+		token := handler.handleToken(host, port, region, user)
+
+		fmt.Println("Token: ", token)
 	},
 }
 
