@@ -36,11 +36,11 @@ archives:
     replacements:
       amd64: x86_64
 
-project_name: birdiecare-dbc
+project_name: homebrew-dbc
 
 # Check https://goreleaser.com/customization/homebrew/
 brews:
-  - homepage: 'https://github.com/birdicare/dbc'
+  - homepage: 'https://github.com/birdicare/homebrew-dbc'
     description: 'Database Connect'
     folder: Formula
     commit_author:
