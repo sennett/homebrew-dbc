@@ -33,7 +33,7 @@ archives:
     replacements:
       amd64: x86_64
 
-project_name: homebrew-dbc
+project_name: dbc
 
 # Check https://goreleaser.com/customization/homebrew/
 brews:
