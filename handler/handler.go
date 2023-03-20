@@ -1,27 +1,15 @@
 package handler
 
 import (
-	"context"
-	"fmt"
-
-	"github.com/aws/aws-sdk-go-v2/config"
-	"github.com/aws/aws-sdk-go-v2/feature/rds/auth"
-	_ "github.com/go-sql-driver/mysql"
+	"github.com/aws/aws-sdk-go-v2/service/ssm"
 )
 
-func HandleToken(host string, port string, region string, user string) string {
-	var dbEndpoint string = fmt.Sprintf("%s:%s", host, port)
+func Handler(r string, h string, p string, lp string) {
 
-	cfg, err := config.LoadDefaultConfig(context.TODO())
-	if err != nil {
-		panic("configuration error: " + err.Error())
-	}
+	var session ssm.StartSessionOutput
 
-	authenticationToken, err := auth.BuildAuthToken(
-		context.TODO(), dbEndpoint, region, user, cfg.Credentials)
-	if err != nil {
-		panic("failed to create authentication token: " + err.Error())
-	}
+	bastion := getBastion(r)
+	session = handleSession(bastion, g, p, lp)
 
-	return authenticationToken
+	handleSession(session.StreamURL, session.TokenValue)
 }

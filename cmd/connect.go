@@ -52,9 +52,11 @@ Then paste the token`,
 		flag.Parse()
 
 		if iam {
-			token := handler.HandleToken(host, port, region, user)
+			token := handler.GenerateToken(host, port, region, user)
 			fmt.Println("Token: ", token)
 		}
+		// Start Port-Forwarding Session
+		handler.Handler(region, host, port, localport)
 	},
 }
 
