@@ -16,6 +16,7 @@ var host string
 var port string
 var region string
 var user string
+var iam bool
 
 // connectCmd represents the connect command
 var connectCmd = &cobra.Command{
@@ -32,8 +33,10 @@ Then paste the token`,
 	Run: func(cmd *cobra.Command, args []string) {
 		flag.Parse()
 
-		token := handler.HandleToken(host, port, region, user)
-		fmt.Println("Token: ", token)
+		if iam {
+			token := handler.HandleToken(host, port, region, user)
+			fmt.Println("Token: ", token)
+		}
 	},
 }
 
@@ -45,4 +48,5 @@ func init() {
 	connectCmd.Flags().StringVarP(&port, "port", "p", "5432", "Port of the Datbase to open a connection to (default 5432)")
 	connectCmd.Flags().StringVarP(&region, "region", "r", "eu-west-2", "Region of the Datbase to open a connection to (default eu-west-2)")
 	connectCmd.Flags().StringVarP(&user, "user", "u", "", "The DB User to open a connection with")
+	connectCmd.Flags().BoolVarP(&iam, "iam", "I", false, "Bool: Use IAM Authentication for Database Connection - Generates a password token using IAM Authentication")
 }
