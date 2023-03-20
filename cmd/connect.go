@@ -45,5 +45,4 @@ func init() {
 	connectCmd.Flags().StringVarP(&port, "port", "p", "5432", "Port of the Datbase to open a connection to (default 5432)")
 	connectCmd.Flags().StringVarP(&region, "region", "r", "eu-west-2", "Region of the Datbase to open a connection to (default eu-west-2)")
 	connectCmd.Flags().StringVarP(&user, "user", "u", "", "The DB User to open a connection with")
-
 }
