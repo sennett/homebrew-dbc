@@ -30,7 +30,6 @@ archives:
       amd64: x86_64
     files:
       - README.md
-      - install_ssm_plugin.sh
 
 project_name: dbc
 
@@ -48,5 +47,3 @@ brews:
       name: dbc
     install: |
       bin.install "dbc"
-    post_install: |
-      Kernel.system "install_ssm_plugin.sh"

@@ -29,10 +29,10 @@ Once the connection is open:
 ```
 
 ➜ dbc connect -H ${db_host}
-2023/03/21 10:50:44 DBConnect
-2023/03/21 10:50:44 Using bastion: ${bastion_id}
-2023/03/21 10:50:44 Opening connection @ localhost:5432
-2023/03/21 10:50:44 listening on [::]:5432
+2023/03/21 17:27:16 DBConnect
+2023/03/21 17:27:16 Using bastion: i-0a884a55c892751e4
+2023/03/21 17:27:16 Opening connection
+2023/03/21 17:27:16 Connection Open at localhost:5432
 
 ...
 
@@ -44,4 +44,27 @@ You may connect to the database using `localhost:5432` as if `localhost` was the
 
 ## IAM Authentication
 
-TODO
+If your databases are super cool and secure, IAM Authentication will be enabled.
+
+To use `dbc` with an IAM Enabled Database, you can use the `--iam` flag to generate a token while opening your connection!
+
+```
+
+➜ dbc connect -H ${db_host} --iam
+2023/03/21 17:28:30 DBConnect IAM
+2023/03/21 17:28:30 Token: ...
+2023/03/21 17:28:30 Using bastion: i-0a884a55c892751e4
+2023/03/21 17:28:30 Opening connection
+2023/03/21 17:28:30 Connection Open at localhost:5432
+
+```
+
+Then when connecting to your DB...
+
+`psql -h localhost -p 5432 -U ${user} -d ${db} --password`
+
+Paste the token!
+
+Or... If you're very fancy:
+
+`export PGPASSWORD=${token} && psql -h localhost -p 5432 -U ${user} -d ${db}`
