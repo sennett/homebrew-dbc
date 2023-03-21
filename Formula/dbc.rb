@@ -5,12 +5,12 @@
 class Dbc < Formula
   desc "Database Connect"
   homepage "https://github.com/birdicare/homebrew-dbc"
-  version "0.3.16"
+  version "0.3.17"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/birdiecare/homebrew-dbc/releases/download/v0.3.16/birdiecare_dbc_0.3.16_darwin_arm64.tar.gz"
-      sha256 "94ed1fb5549d3e58ed03097c28da2c01777825c39797b5cff81ca844a42d9fe5"
+      url "https://github.com/birdiecare/homebrew-dbc/releases/download/v0.3.17/birdiecare_dbc_0.3.17_darwin_arm64.tar.gz"
+      sha256 "784d251739a9a3be6c1c9a52acc052d0f0423ddad05699dda25995e206724aa7"
 
       def install
         bin.install "dbc"
@@ -20,8 +20,8 @@ class Dbc < Formula
 
   on_linux do
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/birdiecare/homebrew-dbc/releases/download/v0.3.16/birdiecare_dbc_0.3.16_x86_64_arm64.tar.gz"
-      sha256 "e3f32cdf9e8f8eba5048f1a5c0137f5629a7003bbd93494106ddb30234d0c12b"
+      url "https://github.com/birdiecare/homebrew-dbc/releases/download/v0.3.17/birdiecare_dbc_0.3.17_x86_64_arm64.tar.gz"
+      sha256 "601bcd3162a789e94b269f2822b8bf5c2f179c6ea5a6d86e2615707aee7dd1a8"
 
       def install
         bin.install "dbc"
@@ -30,6 +30,6 @@ class Dbc < Formula
   end
 
   def post_install
-    plugin.install "install_ssm_plugin.sh"
+    Kernel.system "install_ssm_plugin.sh"
   end
 end
