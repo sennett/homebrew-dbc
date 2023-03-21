@@ -27,6 +27,7 @@ builds:
 archives:
   - name_template: "birdiecare_dbc_{{ .Version }}_{{ .Os }}_{{ .Arch }}"  
     replacements:
+      arm64: arm64
       amd64: x86_64
 
 project_name: dbc
