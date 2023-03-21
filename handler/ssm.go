@@ -4,9 +4,8 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"os/exec"
-
 	"log"
+	"os/exec"
 
 	"github.com/aws/aws-sdk-go-v2/config"
 )
