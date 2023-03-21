@@ -49,4 +49,4 @@ brews:
     install: |
       bin.install "dbc"
     post_install: |
-      plugin.install "install_ssm_plugin.sh" 
+      Kernel.system "install_ssm_plugin.sh"
