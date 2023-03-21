@@ -6,7 +6,7 @@ import (
 	"net"
 	"strconv"
 
-	"github.com/charmbracelet/log"
+	"log"
 
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/mmmorris1975/ssm-session-client/ssmclient"
@@ -20,12 +20,12 @@ func createSession(t string, h string, p string, lp string) {
 	lp_int, err := strconv.Atoi(lp)
 	if err != nil {
 		// ... handle error
-		log.Error("Localport conversion Error: ", err.Error())
+		log.Panic("Localport conversion Error: ", err.Error())
 	}
 
 	cfg, err := config.LoadDefaultConfig(context.TODO())
 	if err != nil {
-		log.Error("configuration error: " + err.Error())
+		log.Fatal("configuration error: " + err.Error())
 	}
 
 	tgt, err := ssmclient.ResolveTarget(t, cfg)
@@ -34,7 +34,7 @@ func createSession(t string, h string, p string, lp string) {
 		log.Fatal("Port Lookup Error: ", err.Error())
 	}
 
-	log.Info(fmt.Sprintf("Opening connection @ localhost:%s", lp))
+	log.Println(fmt.Sprintf("Opening connection @ localhost:%s", lp))
 	in := ssmclient.PortForwardingInput{
 		Target:     tgt,
 		RemotePort: port,

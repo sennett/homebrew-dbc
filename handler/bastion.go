@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/charmbracelet/log"
+	"log"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
@@ -19,7 +19,7 @@ func getBastion() string {
 
 	cfg, err := config.LoadDefaultConfig(context.TODO())
 	if err != nil {
-		log.Error("configuration error: " + err.Error())
+		log.Panic("configuration error: " + err.Error())
 	}
 
 	svc := ec2.NewFromConfig(cfg)
@@ -35,11 +35,11 @@ func getBastion() string {
 
 	instance_list, err := svc.DescribeInstances(context.TODO(), params)
 	if err != nil {
-		log.Error(err)
+		log.Fatal(err)
 	}
 
 	bastion = *instance_list.Reservations[0].Instances[0].InstanceId
 
-	log.Info(fmt.Sprintf("Using bastion: %s", bastion))
+	log.Println(fmt.Sprintf("Using bastion: %s", bastion))
 	return bastion
 }

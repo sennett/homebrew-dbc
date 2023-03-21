@@ -4,9 +4,10 @@ import (
 	"context"
 	"fmt"
 
+	"log"
+
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/feature/rds/auth"
-	"github.com/charmbracelet/log"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -16,13 +17,13 @@ func GenerateToken(host string, port string, region string, user string) string 
 
 	cfg, err := config.LoadDefaultConfig(context.TODO())
 	if err != nil {
-		log.Error("configuration error: " + err.Error())
+		log.Panic("configuration error: " + err.Error())
 	}
 
 	authenticationToken, err := auth.BuildAuthToken(
 		context.TODO(), dbEndpoint, region, user, cfg.Credentials)
 	if err != nil {
-		log.Error("failed to create authentication token: " + err.Error())
+		log.Panic("failed to create authentication token: " + err.Error())
 	}
 
 	return authenticationToken
