@@ -13,4 +13,4 @@ install_plugin()
 }
 
 
-[ ! -d ~/../../usr/local/sessionmanagerplugin ] && install_plugin
+[ ! -d /usr/local/sessionmanagerplugin ] && install_plugin
