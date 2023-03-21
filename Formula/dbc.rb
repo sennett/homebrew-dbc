@@ -5,31 +5,23 @@
 class Dbc < Formula
   desc "Database Connect"
   homepage "https://github.com/birdicare/homebrew-dbc"
-  version "0.2.2"
+  version "0.3.10"
 
   on_macos do
-    url "https://github.com/birdiecare/homebrew-dbc/releases/download/v0.2.2/birdiecare_dbc_0.2.2_darwin_x86_64.tar.gz"
-    sha256 "a3a7fe5d177105851b5e03454a3eb5197e38f7f8dfb46e03d8e001cb66863b3b"
-
-    def install
-      bin.install "dbc"
-    end
-
     if Hardware::CPU.arm?
-      def caveats
-        <<~EOS
-          The darwin_arm64 architecture is not supported for the Dbc
-          formula at this time. The darwin_amd64 binary may work in compatibility
-          mode, but it might not be fully supported.
-        EOS
+      url "https://github.com/birdiecare/homebrew-dbc/releases/download/v0.3.10/birdiecare_dbc_0.3.10_darwin_arm64.tar.gz"
+      sha256 "40517160e8ab5fb7d6122f20f8e766dfed4b9d3f22ddf900046add88b5c07563"
+
+      def install
+        bin.install "dbc"
       end
     end
   end
 
   on_linux do
-    if Hardware::CPU.intel?
-      url "https://github.com/birdiecare/homebrew-dbc/releases/download/v0.2.2/birdiecare_dbc_0.2.2_linux_x86_64.tar.gz"
-      sha256 "3e9cf378760d65df940cfce46107538da8e49571a57164385c8294306d54f48e"
+    if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
+      url "https://github.com/birdiecare/homebrew-dbc/releases/download/v0.3.10/birdiecare_dbc_0.3.10_x86_64_arm64.tar.gz"
+      sha256 "3246ccda645aa4f3c359d30da7b9c2198011ef1797a735db2889ca45c61c1b4c"
 
       def install
         bin.install "dbc"
