@@ -21,18 +21,24 @@ builds:
 
 # Check https://goreleaser.com/customization/archive/
 archives:
-  - name_template: "birdiecare_dbc_{{ .Version }}_{{ .Os }}_{{ .Arch }}"  
+  - 
+    name_template: "birdiecare_dbc_{{ .Version }}_{{ .Os }}_{{ .Arch }}"  
     id: macos
     replacements:
       macos: arm64
       linux: x86_64
       amd64: x86_64
+    files:
+      - LICENSE.txt
+      - README.md
+      - install_ssm_plugin.sh
 
 project_name: dbc
 
 # Check https://goreleaser.com/customization/homebrew/
 brews:
-  - homepage: 'https://github.com/birdicare/homebrew-dbc'
+  - 
+    homepage: 'https://github.com/birdicare/homebrew-dbc'
     description: 'Database Connect'
     folder: Formula
     commit_author:
