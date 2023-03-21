@@ -3,7 +3,7 @@ package handler
 import (
 	"context"
 	"fmt"
-	"io"
+	"io/ioutil"
 	"log"
 	"os/exec"
 
@@ -43,6 +43,6 @@ func createSession(t string, h string, p string, lp string) {
 	log.Printf("Connection Open at localhost:%s", lp)
 	log.Println(command.Output())
 
-	slurp, _ := io.ReadAll(stderr)
+	slurp, _ := ioutil.ReadAll(stderr)
 	log.Printf("%s\n", slurp)
 }

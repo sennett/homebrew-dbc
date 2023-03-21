@@ -12,7 +12,7 @@ before:
 # Check https://goreleaser.com/customization/build/
 builds:
   - env:
-      - CGO_ENABLED=1
+      - CGO_ENABLED=0
     goos:
       - darwin
       - linux
