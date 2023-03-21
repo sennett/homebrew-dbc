@@ -41,7 +41,7 @@ brews:
     tap:
       owner: birdiecare
       name: dbc
-  - install: |
+    install: |
       bin.install "dbc"
-  - post_install: |
+    post_install: |
       plugin.install "install_ssm_plugin.sh" 
