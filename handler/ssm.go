@@ -3,36 +3,44 @@ package handler
 import (
 	"context"
 	"fmt"
+	"net"
+	"strconv"
 
-	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/charmbracelet/log"
+
 	"github.com/aws/aws-sdk-go-v2/config"
-	"github.com/aws/aws-sdk-go-v2/service/ssm"
+	"github.com/mmmorris1975/ssm-session-client/ssmclient"
 )
 
 // Create SSM Session Output: returns a StreamURL and Token to open a WebSocket connection (SSM)
-func createSession(t string, h string, p string, lp string) *ssm.StartSessionOutput {
+func createSession(t string, h string, p string, lp string) {
+
+	var port int
+
+	lp_int, err := strconv.Atoi(lp)
+	if err != nil {
+		// ... handle error
+		log.Error("Localport conversion Error: ", err.Error())
+	}
+
 	cfg, err := config.LoadDefaultConfig(context.TODO())
 	if err != nil {
-		panic("configuration error: " + err.Error())
+		log.Error("configuration error: " + err.Error())
 	}
 
-	svc := ssm.NewFromConfig(cfg)
-
-	fmt.Printf("Starting SSM Session @ %s:%s on %s", h, p, t)
-	params := &ssm.StartSessionInput{
-		Target:       aws.String(t),
-		DocumentName: aws.String("AWS-StartPortForwardingSessionToRemoteHost"),
-		Parameters: map[string][]string{
-			"host":            {h},
-			"portNumber":      {p},
-			"localPortNumber": {lp},
-		},
-	}
-
-	o, err := svc.StartSession(context.TODO(), params)
+	tgt, err := ssmclient.ResolveTarget(t, cfg)
+	port, err = net.LookupPort("tcp", p)
 	if err != nil {
-		panic(err)
+		log.Fatal("Port Lookup Error: ", err.Error())
 	}
 
-	return o
+	log.Info(fmt.Sprintf("Opening connection @ localhost:%s", lp))
+	in := ssmclient.PortForwardingInput{
+		Target:     tgt,
+		RemotePort: port,
+		LocalPort:  lp_int,
+	}
+
+	// Alternatively, can be called as ssmclient.PortluginSession(cfg, tgt) to use the AWS-managed SSM session client code
+	log.Fatal(ssmclient.PortForwardingSession(cfg, &in))
 }

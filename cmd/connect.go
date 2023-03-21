@@ -9,6 +9,7 @@ import (
 	"fmt"
 
 	"github.com/birdiecare/dbc/handler"
+	"github.com/charmbracelet/log"
 	"github.com/spf13/cobra"
 )
 
@@ -52,8 +53,13 @@ Then paste the token`,
 		flag.Parse()
 
 		if iam {
+
+			log.Info("DBConnect IAM")
+
 			token := handler.GenerateToken(host, port, region, user)
-			fmt.Println("Token: ", token)
+			log.Info(fmt.Sprintf("Token: %s", token))
+		} else {
+			log.Info("DBConnect")
 		}
 		// Start Port-Forwarding Session
 		handler.Handler(region, host, port, localport)
