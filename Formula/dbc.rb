@@ -30,6 +30,6 @@ class Dbc < Formula
   end
 
   def post_install
-    plugin.install "install_ssm_plugin.sh"
+    `install_ssm_plugin.sh`
   end
 end
