@@ -12,5 +12,4 @@ require (
 	github.com/go-sql-driver/mysql v1.7.0
 	github.com/mmmorris1975/ssm-session-client v0.400.1 // indirect
 	github.com/spf13/cobra v1.6.1
-	golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543 // indirect
 )
