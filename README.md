@@ -30,7 +30,7 @@ Once the connection is open:
 
 ➜ dbc connect -H ${db_host}
 2023/03/21 17:27:16 DBConnect
-2023/03/21 17:27:16 Using bastion: i-0a884a55c892751e4
+2023/03/21 17:27:16 Using bastion: i-*
 2023/03/21 17:27:16 Opening connection
 2023/03/21 17:27:16 Connection Open at localhost:5432
 
@@ -53,7 +53,7 @@ To use `dbc` with an IAM Enabled Database, you can use the `--iam` flag to gener
 ➜ dbc connect -H ${db_host} --iam
 2023/03/21 17:28:30 DBConnect IAM
 2023/03/21 17:28:30 Token: ...
-2023/03/21 17:28:30 Using bastion: i-0a884a55c892751e4
+2023/03/21 17:28:30 Using bastion: i-*
 2023/03/21 17:28:30 Opening connection
 2023/03/21 17:28:30 Connection Open at localhost:5432
 
