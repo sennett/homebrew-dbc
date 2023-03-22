@@ -27,6 +27,8 @@ var connectCmd = &cobra.Command{
 	Long: `Connect to a DB.
 Opens a connection with the given database @ the given port at localhost:5432
 
+	dbc connect
+
 Password Authentication:
 Use an existing database user password to authenticate against the dtaabase once the connection is open.
 
