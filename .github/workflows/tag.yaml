@@ -10,7 +10,7 @@ on:
       - 'LICENSE'
       - 'README.md'
       - 'renovate.json'
-      - '.github/workflows/'
+      - '.github/workflows/**'
       
 env:
   # AWS
