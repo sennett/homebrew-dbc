@@ -24,10 +24,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - uses: webfactory/ssh-agent@v0.4.1
-        with:
-          ssh-private-key: ${{ secrets.BIRDIECARE_TF_REGISTRY_READONLY }}
-
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v3
         id: release
