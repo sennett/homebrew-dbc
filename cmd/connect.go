@@ -1,6 +1,5 @@
 /*
 Copyright © 2023 Harry M harry.morgan@birdie.care
-
 */
 package cmd
 
@@ -61,6 +60,10 @@ Then paste the token`,
 			log.Println(fmt.Sprintf("Token: %s", token))
 		} else {
 			log.Println("DBConnect")
+		}
+
+		if host == "" {
+			host = handler.FuzzEndpoints()
 		}
 		// Start Port-Forwarding Session
 		handler.Handler(region, host, port, localport)
