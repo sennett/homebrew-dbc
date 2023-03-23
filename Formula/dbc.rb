@@ -5,12 +5,12 @@
 class Dbc < Formula
   desc "Database Connect"
   homepage "https://github.com/birdicare/homebrew-dbc"
-  version "0.5.0"
+  version "0.5.1"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/birdiecare/homebrew-dbc/releases/download/v0.5.0/birdiecare_dbc_0.5.0_darwin_arm64.tar.gz"
-      sha256 "4bc180cb3e082d183bf3983c495116664410eb3edf0c8cd6ce20aaa16aba1305"
+      url "https://github.com/birdiecare/homebrew-dbc/releases/download/v0.5.1/birdiecare_dbc_0.5.1_darwin_arm64.tar.gz"
+      sha256 "75b8e3a23db2fea452ecd335d02b213990f5fc23592bf2cd493c896e7a1174a0"
 
       def install
         bin.install "dbc"
@@ -20,8 +20,8 @@ class Dbc < Formula
 
   on_linux do
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/birdiecare/homebrew-dbc/releases/download/v0.5.0/birdiecare_dbc_0.5.0_x86_64_arm64.tar.gz"
-      sha256 "5b484a31591021995d16cc44194b42dc360ba5818c122e4f8d5c70ac6661f70f"
+      url "https://github.com/birdiecare/homebrew-dbc/releases/download/v0.5.1/birdiecare_dbc_0.5.1_x86_64_arm64.tar.gz"
+      sha256 "cbcf29e18ca3b0c2137d0981b43ce5f312e4ded4ed8eee31762ef79464278b66"
 
       def install
         bin.install "dbc"
