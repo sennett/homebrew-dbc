@@ -2,6 +2,9 @@ package handler
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
+	"reflect"
 
 	"log"
 
@@ -10,15 +13,16 @@ import (
 	"github.com/ktr0731/go-fuzzyfinder"
 )
 
-type DB struct {
-	Cluster  string
-	Instance string
+type db struct {
+	DBId      string
+	Endpoints []string
+	IAM       bool
 }
 
-// Return DB Type list of Database ClusterId's, InstanceId's and Endpoints.
-func getEndpoints() []string {
+var endpoints []db
 
-	var endpoints []string
+// Return DB Type list of Database ClusterId's, InstanceId's and Endpoints.
+func getEndpoints() {
 
 	cfg, err := config.LoadDefaultConfig(context.TODO())
 	if err != nil {
@@ -28,29 +32,120 @@ func getEndpoints() []string {
 	svc := rds.NewFromConfig(cfg)
 
 	log.Println("Grabbing RDS Endpoints...")
-	params := &rds.DescribeDBInstancesInput{}
-	instance_list, err := svc.DescribeDBInstances(context.TODO(), params)
+
+	i_params := &rds.DescribeDBInstancesInput{}
+	instance_list, err := svc.DescribeDBInstances(context.TODO(), i_params)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	for _, i := range instance_list.DBInstances {
-		endpoints = append(endpoints, *i.Endpoint.Address)
+	c_params := &rds.DescribeDBClustersInput{}
+	cluster_list, err := svc.DescribeDBClusters(context.TODO(), c_params)
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	return endpoints
+	// Get clusters
+	for _, i := range cluster_list.DBClusters {
+		endpoints = append(endpoints, db{
+			DBId:      *i.DBClusterIdentifier,
+			Endpoints: []string{*i.ReaderEndpoint, *i.Endpoint},
+			IAM:       *i.IAMDatabaseAuthenticationEnabled,
+		})
+	}
+
+	// Get Instances not in Clusters
+	for _, i := range instance_list.DBInstances {
+		if i.DBClusterIdentifier == nil {
+			endpoints = append(endpoints, db{
+				DBId:      *i.DBInstanceIdentifier,
+				Endpoints: []string{*i.Endpoint.Address},
+				IAM:       *&i.IAMDatabaseAuthenticationEnabled,
+			})
+		}
+	}
 }
 
-func FuzzEndpoints() string {
+func FuzzEndpoints(iam bool) string {
 
-	endpoints := getEndpoints()
+	var returnEndpoint string
 
-	idx, err := fuzzyfinder.Find(endpoints, func(i int) string {
-		return endpoints[i]
-	})
-	if err != nil {
-		log.Panic(err.Error())
+	getEndpoints()
+
+	// if IAM - remove non-IAM enabled db endpoints from selection list
+	if iam {
+		var endpoints_iam []db
+		for _, i := range endpoints {
+			if i.IAM == true {
+				endpoints_iam = append(endpoints_iam, i)
+			}
+		}
+
+		endpoints = endpoints_iam
+	}
+	// if not IAM - remove IAM enabled db endpoints from selection list
+	if !iam {
+		var endpoints_iam []db
+		for _, i := range endpoints {
+			if i.IAM == false {
+				endpoints_iam = append(endpoints_iam, i)
+			}
+		}
+
+		endpoints = endpoints_iam
 	}
 
-	return endpoints[idx]
+	prettyString, _ := json.MarshalIndent(endpoints, "", "  ")
+	fmt.Printf("%s: %s\n", reflect.TypeOf(endpoints).Name(), prettyString)
+
+	idx, err := fuzzyfinder.Find(
+		endpoints,
+		func(i int) string {
+			return endpoints[i].DBId
+		},
+		fuzzyfinder.WithPreviewWindow(func(i, w, h int) string {
+			if i == -1 {
+				return ""
+			}
+			return fmt.Sprintf("Cluster: %s\nEndpoints Id: %+q\nIAM Auth: %t",
+				endpoints[i].DBId,
+				endpoints[i].Endpoints,
+				endpoints[i].IAM)
+		}))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if len(endpoints[idx].Endpoints) > 1 {
+		returnEndpoint = fuzzCluster(endpoints[idx].Endpoints)
+	} else {
+		returnEndpoint = endpoints[idx].Endpoints[0]
+	}
+
+	return returnEndpoint
+}
+
+func fuzzCluster(e []string) string {
+	idx, err := fuzzyfinder.Find(e, func(i int) string {
+		return e[i]
+	},
+		fuzzyfinder.WithPreviewWindow(func(i, w, h int) string {
+			if i == -1 {
+				return ""
+			}
+			return fmt.Sprintf("Role: %s", isRole(e, i))
+		}))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return e[idx]
+}
+
+func isRole(e []string, i int) string {
+	if e[i] == e[0] {
+		return "Reader"
+	} else {
+		return "Writer"
+	}
 }

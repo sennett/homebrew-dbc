@@ -11,7 +11,10 @@ require (
 	github.com/spf13/cobra v1.6.1
 )
 
+require github.com/gogo/protobuf v1.3.2 // indirect
+
 require (
+	github.com/aws/aws-sdk-go v1.44.227
 	github.com/aws/aws-sdk-go-v2/credentials v1.13.17 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.13.0 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.1.31 // indirect

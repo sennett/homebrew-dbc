@@ -55,9 +55,7 @@ Then paste the token`,
 		flag.Parse()
 
 		if iam {
-
 			log.Println("DBConnect IAM")
-
 			token := handler.GenerateToken(host, port, region, user)
 			log.Println(fmt.Sprintf("Token: %s", token))
 		} else {
@@ -65,7 +63,7 @@ Then paste the token`,
 		}
 
 		if host == "" {
-			host = handler.FuzzEndpoints()
+			host = handler.FuzzEndpoints(iam)
 		}
 		// Start Port-Forwarding Session
 		handler.Handler(region, host, port, localport)
@@ -74,6 +72,8 @@ Then paste the token`,
 
 func init() {
 	rootCmd.AddCommand(connectCmd)
+
+	handler.AssertCredentials()
 
 	//Flags
 	connectCmd.Flags().StringVarP(&host, "host", "H", "", "Hostname of the Database to open a connection to. If a hostname is not provided, a fuzzyfind list with be presented to select a database, and subsequently, a user to connect to`")
