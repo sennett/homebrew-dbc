@@ -55,6 +55,10 @@ Then paste the token`,
 	Run: func(cmd *cobra.Command, args []string) {
 		flag.Parse()
 
+		if host == "" {
+			host = handler.FuzzEndpoints(iam)
+		}
+
 		if iam {
 			myFigure := figure.NewFigure("DBC Connect IAM", "", true)
 			myFigure.Print()
@@ -66,10 +70,6 @@ Then paste the token`,
 			myFigure := figure.NewFigure("DBC Connect", "", true)
 			myFigure.Print()
 			fmt.Println("")
-		}
-
-		if host == "" {
-			host = handler.FuzzEndpoints(iam)
 		}
 		// Start Port-Forwarding Session
 		handler.Handler(region, host, port, localport)
