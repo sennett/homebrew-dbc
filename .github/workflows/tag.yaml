@@ -12,7 +12,6 @@ on:
       - '.github/workflows/**'
       
 env:
-  NPM_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
   # AWS
   AWS_DEFAULT_REGION: eu-west-2
   AWS_REGION: eu-west-2
@@ -40,7 +39,7 @@ jobs:
             @semantic-release/git
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ env.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Bump version and push tag
         if: steps.release.outcome == 'success'
