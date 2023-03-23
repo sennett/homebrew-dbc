@@ -2,9 +2,7 @@ package handler
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
-	"reflect"
 
 	"log"
 
@@ -95,9 +93,6 @@ func FuzzEndpoints(iam bool) string {
 		endpoints = endpoints_iam
 	}
 
-	prettyString, _ := json.MarshalIndent(endpoints, "", "  ")
-	fmt.Printf("%s: %s\n", reflect.TypeOf(endpoints).Name(), prettyString)
-
 	idx, err := fuzzyfinder.Find(
 		endpoints,
 		func(i int) string {
@@ -107,7 +102,7 @@ func FuzzEndpoints(iam bool) string {
 			if i == -1 {
 				return ""
 			}
-			return fmt.Sprintf("Cluster: %s\nEndpoints Id: %+q\nIAM Auth: %t",
+			return fmt.Sprintf("Cluster: %s\nEndpoints: %+q\nIAM Auth: %t",
 				endpoints[i].DBId,
 				endpoints[i].Endpoints,
 				endpoints[i].IAM)
