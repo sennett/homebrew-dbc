@@ -79,7 +79,7 @@ Or... If you're very fancy:
 
 If you're experiencing trouble opening a session, and you're recieving a `255` error, it's likely due to a missing AWS SSM Plugin installation.
 
-Run this handy script!
+Run this handy script! (Installs the plugin)
 
 `wget -O - https://raw.githubusercontent.com/birdiecare/homebrew-dbc/main/install_ssm_plugin.sh | sh`
 
