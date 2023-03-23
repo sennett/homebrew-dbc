@@ -10,6 +10,7 @@ import (
 	"log"
 
 	"github.com/birdiecare/dbc/handler"
+	"github.com/common-nighthawk/go-figure"
 	"github.com/spf13/cobra"
 )
 
@@ -55,11 +56,16 @@ Then paste the token`,
 		flag.Parse()
 
 		if iam {
-			log.Println("DBConnect IAM")
+			myFigure := figure.NewFigure("DBC Connect IAM", "", true)
+			myFigure.Print()
+			fmt.Println("")
+
 			token := handler.GenerateToken(host, port, region, user)
 			log.Println(fmt.Sprintf("Token: %s", token))
 		} else {
-			log.Println("DBConnect")
+			myFigure := figure.NewFigure("DBC Connect", "", true)
+			myFigure.Print()
+			fmt.Println("")
 		}
 
 		if host == "" {
