@@ -13,6 +13,7 @@ import (
 
 type db struct {
 	DBId      string
+	Type      string
 	Endpoints []string
 	IAM       bool
 }
@@ -47,6 +48,7 @@ func getEndpoints() {
 	for _, i := range cluster_list.DBClusters {
 		endpoints = append(endpoints, db{
 			DBId:      *i.DBClusterIdentifier,
+			Type:      "Cluster",
 			Endpoints: []string{*i.ReaderEndpoint, *i.Endpoint},
 			IAM:       *i.IAMDatabaseAuthenticationEnabled,
 		})
@@ -57,6 +59,7 @@ func getEndpoints() {
 		if i.DBClusterIdentifier == nil {
 			endpoints = append(endpoints, db{
 				DBId:      *i.DBInstanceIdentifier,
+				Type:      "Instance",
 				Endpoints: []string{*i.Endpoint.Address},
 				IAM:       *&i.IAMDatabaseAuthenticationEnabled,
 			})
@@ -102,8 +105,9 @@ func FuzzEndpoints(iam bool) string {
 			if i == -1 {
 				return ""
 			}
-			return fmt.Sprintf("Cluster: %s\nEndpoints: %+q\nIAM Auth: %t",
+			return fmt.Sprintf("DB: %s\nType: %s\nEndpoints: %+q\nIAM Auth: %t",
 				endpoints[i].DBId,
+				endpoints[i].Type,
 				endpoints[i].Endpoints,
 				endpoints[i].IAM)
 		}))
