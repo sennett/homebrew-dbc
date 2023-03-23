@@ -11,7 +11,10 @@ require (
 	github.com/spf13/cobra v1.6.1
 )
 
-require github.com/gogo/protobuf v1.3.2 // indirect
+require (
+	github.com/common-nighthawk/go-figure v0.0.0-20210622060536-734e95fb86be // indirect
+	github.com/gogo/protobuf v1.3.2 // indirect
+)
 
 require (
 	github.com/aws/aws-sdk-go v1.44.227
