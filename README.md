@@ -13,7 +13,11 @@ Connect to databases securely, utilising AWS SSM, EC2 & RDS IAM Authentication.
 
 ## Use `dbc`
 
-The connect command opens a WebSocket port-forwarding session through an available Bastion host.
+The connect command opens a WebSocket port-forwarding session through an available Bastion instance.
+
+Running `dbc connect` will start the process of creating a connection to a database. 
+Not specifying a host will prompt you to select one from a fuzzyfinder list of databases.
+
 A connection to the specified Database host `-H` will then be available at `localhost:localport` (localport: `-lp`).
 
 `dbc` picks up your configured AWS profile from your environment.

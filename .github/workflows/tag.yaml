@@ -8,7 +8,6 @@ on:
       - '.gitignore'
       - '.go.mod'
       - 'LICENSE'
-      - 'README.md'
       - 'renovate.json'
       - '.github/workflows/**'
       
