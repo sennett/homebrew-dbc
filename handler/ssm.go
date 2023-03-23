@@ -18,8 +18,6 @@ func createSession(t string, h string, p string, lp string) {
 		log.Panic("configuration error: " + err.Error())
 	}
 
-	log.Printf(fmt.Sprintf("Opening connection"))
-
 	args := []string{
 		"ssm",
 		"start-session",

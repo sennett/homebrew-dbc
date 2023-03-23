@@ -1,6 +1,5 @@
 /*
 Copyright © 2023 Harry M harry.morgan@birdie.care
-
 */
 package cmd
 
@@ -28,6 +27,8 @@ var connectCmd = &cobra.Command{
 	Long: `Connect to a DB.
 Opens a connection with the given database @ the given port at localhost:5432
 
+	dbc connect
+
 Password Authentication:
 Use an existing database user password to authenticate against the dtaabase once the connection is open.
 
@@ -54,13 +55,15 @@ Then paste the token`,
 		flag.Parse()
 
 		if iam {
-
 			log.Println("DBConnect IAM")
-
 			token := handler.GenerateToken(host, port, region, user)
 			log.Println(fmt.Sprintf("Token: %s", token))
 		} else {
 			log.Println("DBConnect")
+		}
+
+		if host == "" {
+			host = handler.FuzzEndpoints(iam)
 		}
 		// Start Port-Forwarding Session
 		handler.Handler(region, host, port, localport)
@@ -69,6 +72,8 @@ Then paste the token`,
 
 func init() {
 	rootCmd.AddCommand(connectCmd)
+
+	handler.AssertCredentials()
 
 	//Flags
 	connectCmd.Flags().StringVarP(&host, "host", "H", "", "Hostname of the Database to open a connection to. If a hostname is not provided, a fuzzyfind list with be presented to select a database, and subsequently, a user to connect to`")
