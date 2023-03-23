@@ -79,6 +79,7 @@ Then paste the token`,
 func init() {
 	rootCmd.AddCommand(connectCmd)
 
+	// Assert AWS Creds
 	handler.AssertCredentials()
 
 	//Flags
