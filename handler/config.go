@@ -2,9 +2,11 @@ package handler
 
 import (
 	"context"
+	"fmt"
 	"log"
 
 	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/service/sts"
 )
 
 // Assert AWS Credentials are configured
@@ -16,7 +18,15 @@ func AssertCredentials() {
 	}
 
 	if cfg.Credentials != nil {
-		log.Println("Credentials found @ " + cfg.Region)
+		svc := sts.NewFromConfig(cfg)
+		params := sts.GetCallerIdentityInput{}
+
+		caller_id, err := svc.GetCallerIdentity(context.TODO(), &params)
+		if err != nil {
+			log.Fatal("Failed to call identity ", err.Error())
+		}
+
+		fmt.Println(fmt.Sprintf("Using %s @ %s", *caller_id.UserId, cfg.Region))
 	} else {
 		log.Fatal("Configuration Error. No AWS credentials configured: " + err.Error())
 	}
