@@ -16,17 +16,18 @@ builds:
     goos:
       - darwin
       - linux
-    goarch:
-      - arm64
+      - windows
 
 # Check https://goreleaser.com/customization/archive/
 archives:
   - 
     name_template: "birdiecare_dbc_{{ .Version }}_{{ .Os }}_{{ .Arch }}"  
-    id: macos
     replacements:
+      darwin: Darwin
+      linux: Linux
       macos: arm64
-      linux: x86_64
+      windows: windows
+      386: i386
       amd64: x86_64
     files:
       - README.md
