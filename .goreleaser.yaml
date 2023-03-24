@@ -25,7 +25,6 @@ archives:
     replacements:
       darwin: Darwin
       linux: Linux
-      macos: arm64
       windows: windows
       386: i386
       amd64: x86_64
