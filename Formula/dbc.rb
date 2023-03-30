@@ -9,8 +9,8 @@ class Dbc < Formula
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/birdiecare/homebrew-dbc/releases/download/v0.5.10/birdiecare_dbc_0.5.10_Darwin_arm64.tar.gz"
-      sha256 "03aaac899a38c7cdddd7c85aa65727fc41566189e6fb37809b899ab7dd2598ed"
+      url "https://github.com/birdiecare/homebrew-dbc/archive/v0.5.11.tar.gz"
+      sha256 "7930fe1a5ac8dcf168cc67012e63b36f8431e962041f23af005476c0f713464d"
 
       def install
         bin.install "dbc"
