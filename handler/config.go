@@ -26,7 +26,8 @@ func AssertCredentials() {
 			log.Fatal("Failed to call identity ", err.Error())
 		}
 
-		fmt.Println(fmt.Sprintf("Using %s @ %s", *caller_id.UserId, cfg.Region))
+		fmt.Println("")
+		log.Println(fmt.Sprintf("Using %s @ %s", *caller_id.UserId, cfg.Region))
 	} else {
 		log.Fatal("Configuration Error. No AWS credentials configured: " + err.Error())
 	}

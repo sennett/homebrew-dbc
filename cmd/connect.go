@@ -7,8 +7,6 @@ import (
 	"flag"
 	"fmt"
 
-	"log"
-
 	"github.com/birdiecare/dbc/handler"
 	"github.com/common-nighthawk/go-figure"
 	"github.com/spf13/cobra"
@@ -60,15 +58,16 @@ Then paste the token`,
 		}
 
 		if iam {
+			fmt.Println("")
 			myFigure := figure.NewFigure("DBC Connect IAM", "", true)
 			myFigure.Print()
-			fmt.Println("")
 
-			token := handler.GenerateToken(host, port, region, user)
-			log.Println(fmt.Sprintf("Token: %s", token))
+			fmt.Println("")
+			handler.GenerateToken(host, port, region, user)
 		} else {
 			myFigure := figure.NewFigure("DBC Connect", "", true)
 			myFigure.Print()
+
 			fmt.Println("")
 		}
 		// Start Port-Forwarding Session
